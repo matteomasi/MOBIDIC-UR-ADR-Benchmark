@@ -1,0 +1,479 @@
+DATABASE phreeqc_cwm1.dat
+TITLE CWM1 PHREEQC IMPLEMENTATION
+SOLUTION 1
+units   mol/kgw
+temp    20.000000
+density	1
+Do       9.0e-3			# comp 1
+Sf        0.5e-3		# comp 2
+Sa		1.03e-3			# comp 3
+Sin		0.5e-3			# comp 4
+Snh		0.5e-3			# comp 5
+Sno		40.0e-3			# comp 6
+Sulphide	10.00e-3	# comp 7
+Sso		10.0e-3			# comp 8 
+Xs		0.5e-3			# comp 9
+Xi		0.1e-3			# comp 10
+Xh        1.36e-4		# comp 11
+Xa        1.36e-4		# comp 12 
+Xfb        1.36e-4		# comp 13
+Xamb        1.36e-4		# comp 14
+Xasrb		1.36e-4		# comp 15
+Xsob		1.36e-4		# comp 16
+pH 		7.0000 charge 	# comp 17
+pe		4.0				# comp 18
+-water 		1	# kg		
+#ende
+
+
+##########################################
+###########     KINETICS    ##############
+##########################################
+
+KINETICS
+#
+Aerobic_Growth_Xh_on_Sf
+    -formula  Do  -0.587301587301587 Sf  -1.58730158730159 Snh -0.022380952		Xh  1	# So2: 1-1/Y_h	Sf: -1/Y_h	Snh: v_5,2	Xh 1
+	-m0		1
+	-tol      1e-08
+#
+Anoxic_Growth_Xh_on_Sf
+    -formula  Sf -1.58730158730159	Snh -0.022380952	Sno -0.205350205	Xh 1		# Sf: -1/Y_h	Snh: v_5,3	Sno: -(1-Yh)/(2.86*Yh) 	Xh: 1
+    -m0		1
+	-tol      1e-08
+#
+Aerobic_Growth_Xh_on_Sa
+	-formula	Do -0.587301587301587	Sa -1.58730158730159 Snh -0.07		Xh  1		# So2: 1-1/Y_h	Sa: -1/Y_h	Snh: v_5,4		Xh: 1
+	-m0		1
+	-tol      1e-08
+#
+Anoxic_Growth_Xh_on_Sa
+    -formula  Sa -1.58730158730159	Snh -0.07	Sno -0.205350205	Xh 1				# Sa: -1/Y_h	Snh: v_5,5	Sno: -(1-Yh)/(2.86*Yh) 	Xh: 1
+    -m0		1
+	-tol      1e-08
+#
+Lysis_Xh
+    -formula  Sf 0.05 	Snh 0.0315	Xs 0.85	Xi 0.1	Xh -1								# Sf: f_BM,Sf	Xs: v9,Lysis	Xi: f_BM,Xi		Xh: -1
+    -m0		1
+	-tol      1e-08
+#
+Hydrolysis_Xs
+	-formula	Sf	1	Sin	0	Snh 0.01	Xs	-1										# Sf: 1-f_hyd,Si= 1-0 = 1	Si: f_hyd,Si= 0		Snh: v_5,1 = 0.01
+	-m0		1
+	-tol      1e-08
+#
+Aerobic_Growth_Xa_on_Snh
+	-formula	Do -18.04166667		Snh -4.236666667	Sno 4.166666667		Xa 1		# Do: -(4.57-Ya)/Ya		Snh: -In,BM-1/Ya	Sno: 1/Ya	Xa: 1
+	-m0		1
+	-tol      1e-08
+#
+Lysis_Xa
+    -formula  Sf 0.05 	Snh 0.0315	Xs 0.85	Xi 0.1	Xa -1								# Sf: f_BM,Sf	Xs: v9,Lysis	Xi: f_BM,Xi		Xa: -1
+    -m0		1
+	-tol      1e-08
+#
+Growth_Xfb
+	-formula	Sf -18.86792453		Sa 17.86792453		Snh	0.496037736		Xfb 1		# Sf: 1/Yfb		Sa: (1-Yfb)/Yfb		Snh: V_5,9 	Xfb: 1
+	-m0		1
+	-tol      1e-08
+#
+Lysis_Xfb
+	-formula	Sf 0.05 	Snh 0.0315		Xs 0.85		Xi 0.1		Xfb -1				# Sf: f_BM,Sf	Xs: v9,Lysis	Xi: f_BM,Xi		Xfb: -1
+	-m0		1
+	-tol      1e-08
+#
+Growth_Xamb
+	-formula	Sa -31.25	Snh	-0.07		Xamb 1										# Sa: (1-Yfb)/Yfb		Snh: V_5,11 	Xamb: 1
+	-m0		1
+	-tol      1e-08
+#
+Lysis_Xamb
+	-formula	Sf 0.05 	Snh 0.0315		Xs 0.85		Xi 0.1		Xamb -1				# Sf: f_BM,Sf	Xs: v_5,12	Xi: f_BM,Xi		Xamb: -1
+	-m0		1
+	-tol      1e-08
+#
+Growth_Xasrb
+	-formula	Sa -20		Snh	-0.07		Sso -9.5	Sulphide 9.5		Xasrb 1		# Sa: -1/Yasrb	Snh: V_5,11 	Sso: -(1-Yasrb)/(2*Yarsb) 	Sulphide: (1-Yasrb)/(2*Yarsb)		Xamb: 1
+	-m0		1
+	-tol      1e-08
+#
+Lysis_Xasrb
+	-formula	Sf 0.05 	Snh 0.0315		Xs 0.85		Xi 0.1		Xasrb -1				# Sf: f_BM,Sf	Xs: v_5,14	Xi: f_BM,Xi		Xasrb: -1
+	-m0		1
+	-tol      1e-08
+#
+Aerobic_Growth_Xsob
+	-formula	Do 	-15.66666667	Snh	-0.07		Sso 8.333333333		Sulphide -8.333333333		Xsob 1				# DO: -(2-Ysob)/Ysob	Snh: V_5,15 	Sso: 1/Ysob 	Sulphide: -1/Ysob		Xsob: 1
+	-m0		1
+	-tol      1e-08
+#
+Anoxic_Growth_Xsob
+	-formula	Snh	-0.07		Sno -8.380952381	Sso 8.333333333		Sulphide -8.333333333		Xsob 1				# DO: -(2-Ysob)/Ysob	Snh: V_5,16 	Sno: -(1-Ysob)/(0.875*Ysob)		Sso: 1/Ysob 	Sulphide: -1/Ysob		Xsob: 1
+	-m0		1
+	-tol      1e-08
+#
+Lysis_Xsob
+	-formula	Sf 0.05 	Snh 0.0315		Xs 0.85		Xi 0.1		Xsob -1				# Sf: f_BM,Sf	Xs: v_5,17	Xi: f_BM,Xi		Xsob: -1
+	-m0		1
+	-tol      1e-08
+#
+#-steps # 100 in 1 steps
+-steps 432000 in 250     #864000 s (10 d) in 250 steps
+INCREMENTAL_REACTIONS true
+
+##########################################
+################  RATES ##################
+##########################################
+RATES
+#
+    Aerobic_Growth_Xh_on_Sf
+-start
+# get molalities and convert to concentration in g/l
+10 Sf = MOL("Sf") 
+20 So2 = MOL("Do") 
+30 Sa = MOL("Sa") 
+40 Snh = MOL("Snh") 
+70 Sh2S = MOL("Sulphide") 
+90 Xh = MOL("Xh")
+# compute reaction term for specific component
+110 r_Sf = Sf/(CALC_VALUE("Ksf")+ Sf)
+120 r_So2 = So2/(CALC_VALUE("Koh")+ So2)
+130 r_Sa = Sf/(Sf + Sa)
+140 r_Snh = Snh /(CALC_VALUE("Knhh")+ Snh)
+170 r_Sh2s = CALC_VALUE("Kh2s_h") / (CALC_VALUE("Kh2s_h") + Sh2S )
+# compute rate
+200 rates = CALC_VALUE("muh") * r_Sf * r_So2 * r_Sa * r_Snh *  r_Sh2s * Xh
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end
+#
+#
+    Anoxic_Growth_Xh_on_Sf
+-start
+# get molalities and convert to concentration in g/l
+10 Sf = MOL("Sf") 
+20 So2 = MOL("Do") 
+30 Sa = MOL("Sa") 
+40 Snh = MOL("Snh") 
+50 Sno = MOL("Sno") 
+70 Sh2S = MOL("Sulphide") 
+90 Xh = MOL("Xh")
+# compute reaction term for specific component
+110 r_Sf = Sf/(CALC_VALUE("Ksf")+ Sf)
+120 r_Koh = CALC_VALUE("Koh")/(CALC_VALUE("Koh")+ So2)
+130 r_Sa = Sf/(Sf + Sa)
+140 r_Snh = Snh /(CALC_VALUE("Knhh")+ Snh)
+150 r_Sno = Sno /(CALC_VALUE("Knoh")+ Sno)
+170 r_Sh2s = CALC_VALUE("Kh2s_h") / (CALC_VALUE("Kh2s_h") + Sh2S )
+# compute rate
+200 rates = CALC_VALUE("eta_g") * CALC_VALUE("muh") * r_Sf * r_Sa * r_Koh * r_Snh * r_Sno * r_Sh2s * Xh
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end
+#
+#
+    Aerobic_Growth_Xh_on_Sa
+-start
+# get molalities and convert to concentration in g/l
+10 Sf = MOL("Sf") 
+20 So2 = MOL("Do") 
+30 Sa = MOL("Sa") 
+40 Snh = MOL("Snh") 
+70 Sh2S = MOL("Sulphide") 
+90 Xh = MOL("Xh")
+
+# compute reaction term for specific component
+110 r_Sa1 = Sa /(CALC_VALUE("Ksa")+ Sa)
+120 r_Sa2 = Sa /(Sf + Sa)
+130 r_So2 = So2/(CALC_VALUE("Koh")+ So2)
+140 r_Snh = Snh /(CALC_VALUE("Knhh")+ Snh)
+170 r_Sh2s = CALC_VALUE("Kh2s_h") / (CALC_VALUE("Kh2s_h") + Sh2S)
+
+# compute rate
+200 rates = CALC_VALUE("muh") * r_Sa1 * r_Sa2 * r_So2 * r_Snh *  r_Sh2s * Xh
+# compute mass change per time step
+300 dGrowth= rates * time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end
+#
+#
+    Anoxic_Growth_Xh_on_Sa
+-start
+# get molalities and convert to concentration in g/l
+10 Sf = MOL("Sf") 
+20 So2 = MOL("Do") 
+30 Sa = MOL("Sa") 
+40 Snh = MOL("Snh") 
+50 Sno = MOL("Sno") 
+70 Sh2S = MOL("Sulphide") 
+90 Xh = MOL("Xh")
+# compute reaction term for specific component
+110 r_Sa1 = Sa/(CALC_VALUE("Ksa")+ Sa)
+120 r_Sa2 = Sa/(Sf + Sa)
+130 r_Koh = CALC_VALUE("Koh")/(CALC_VALUE("Koh")+ So2)
+140 r_Snh = Snh /(CALC_VALUE("Knhh")+ Snh)
+150 r_Sno = Sno /(CALC_VALUE("Knoh")+ Sno)
+170 r_Sh2s = CALC_VALUE("Kh2s_h") / (CALC_VALUE("Kh2s_h") + Sh2S)
+# compute rate
+200 rates = CALC_VALUE("eta_g") * CALC_VALUE("muh") * r_Sa1 * r_Sa2 * r_Koh * r_Sno * r_Snh * r_Sh2s * Xh
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end
+#
+#
+    Lysis_Xh
+-start
+10 Xh = MOL("Xh")
+200 rates = CALC_VALUE("bh") * Xh 
+300 dLysis = rates * time
+310 dLysis = dLysis 
+400 SAVE dLysis
+-end
+#
+#
+    Hydrolysis_Xs
+-start
+10 Xs = MOL("Xs") 
+20 Xfb = MOL("Xfb") 
+30 Xh = MOL("Xh")
+100 r_Xs = (Xs/(Xh+Xfb))
+110 r_Xs = r_Xs / (CALC_VALUE("Kx") + r_Xs)
+200 rates = CALC_VALUE("Kh") * r_Xs * (Xh + CALC_VALUE("eta_h") * Xfb) 
+300 dHydrolysis = rates * time
+310 dHydrolysis = dHydrolysis 
+400 SAVE dHydrolysis
+-end
+#
+#========================================
+    Aerobic_Growth_Xa_on_Snh
+-start
+# get molalities and convert to concentration in g/l
+20 So2 = MOL("Do") 
+40 Snh = MOL("Snh") 
+70 Sh2S = MOL("Sulphide") 
+91 Xa = MOL("Xa")
+
+# compute reaction term for specific component
+121 r_So2_a = So2 /(CALC_VALUE("Koa")+ So2)
+141 r_Snh_a = Snh /(CALC_VALUE("Knha")+ Snh)
+171 r_Sh2s_a = CALC_VALUE("Kh2s_a") / (CALC_VALUE("Kh2s_a") + Sh2S)
+
+# compute rate
+200 rates = CALC_VALUE("mu_a") * r_So2_a * r_Snh_a *  r_Sh2s_a * Xa
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end
+#
+#
+    Lysis_Xa
+-start
+11 Xa = MOL("Xa") 
+200 rates = CALC_VALUE("ba") * Xa 
+300 dLysis = rates * time
+310 dLysis = dLysis 
+400 SAVE dLysis
+-end
+#
+#========================================
+	Growth_Xfb
+-start
+# get molalities and convert to concentration in g/l
+10 Sf = MOL("Sf") 
+20 So2 = MOL("Do") 
+40 Snh = MOL("Snh") 
+50 Sno = MOL("Sno") 
+70 Sh2S = MOL("Sulphide") 
+92 Xfb = MOL("Xfb")
+# compute reaction term for specific component
+112 r_Sf_fb = Sf/(CALC_VALUE("Ksfb")+ Sf)
+132 r_Ko_fb = CALC_VALUE("Kofb")/(CALC_VALUE("Kofb")+ So2)
+142 r_Snh_fb = Snh /(CALC_VALUE("Knhfb")+ Snh)
+152 r_Kno_fb = CALC_VALUE("Knofb") /(CALC_VALUE("Knofb")+ Sno)
+172 r_Sh2s_fb = CALC_VALUE("Kh2s_fb") / (CALC_VALUE("Kh2s_fb") + Sh2S)
+# compute rate
+200 rates = CALC_VALUE("mu_fb") * r_Sf_fb * r_Ko_fb * r_Snh_fb * r_Kno_fb * r_Sh2s_fb * Xfb
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end	
+#
+    Lysis_Xfb
+-start
+11 Xfb = MOL("Xfb") 
+200 rates = CALC_VALUE("b_fb") * Xfb 
+300 dLysis = rates * time
+310 dLysis = dLysis 
+400 SAVE dLysis
+-end
+#
+#========================================
+	Growth_Xamb
+-start
+# get molalities and convert to concentration in g/l
+10 Sa = MOL("Sa") 
+20 So2 = MOL("Do") 
+40 Snh = MOL("Snh") 
+50 Sno = MOL("Sno") 
+70 Sh2S = MOL("Sulphide") 
+93 Xamb = MOL("Xamb")
+# compute reaction term for specific component
+113 r_Sa_amb = Sa/(CALC_VALUE("Ksamb")+ Sa)
+133 r_Ko_amb = CALC_VALUE("Koamb")/(CALC_VALUE("Koamb")+ So2)
+143 r_Snh_amb = Snh /(CALC_VALUE("Knhamb")+ Snh)
+153 r_Kno_amb = CALC_VALUE("Knoamb") /(CALC_VALUE("Knoamb")+ Sno)
+173 r_Sh2s_amb = CALC_VALUE("Kh2s_amb") / (CALC_VALUE("Kh2s_amb") + Sh2S)
+# compute rate
+200 rates = CALC_VALUE("mu_amb") * r_Sa_amb * r_Ko_amb * r_Snh_amb * r_Kno_amb * r_Sh2s_amb * Xamb
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth
+400 SAVE dGrowth
+-end	
+#
+    Lysis_Xamb
+-start
+11 Xamb = MOL("Xamb") 
+200 rates = CALC_VALUE("b_amb") * Xamb 
+300 dLysis = rates * time
+310 dLysis = dLysis 
+400 SAVE dLysis
+-end
+#
+#========================================
+	Growth_Xasrb
+-start
+# get molalities and convert to concentration in g/l
+10 Sa = MOL("Sa") 
+20 So2 = MOL("Do") 
+40 Snh = MOL("Snh") 
+50 Sno = MOL("Sno") 
+70 Sh2S = MOL("Sulphide") 
+80 Sso4 = MOL("Sso") 
+94 Xasrb = MOL("Xasrb")
+
+# compute reaction term for specific component
+114 r_Sa_asrb = Sa/(CALC_VALUE("Ks_asrb")+ Sa)
+134 r_Ko_asrb = CALC_VALUE("Ko_asrb")/(CALC_VALUE("Ko_asrb")+ So2)
+144 r_Snh_asrb = Snh /(CALC_VALUE("Knh_asrb")+ Snh)
+154 r_Kno_asrb = CALC_VALUE("Kno_asrb") /(CALC_VALUE("Kno_asrb")+ Sno)
+174 r_Sh2s_asrb = CALC_VALUE("Kh2s_asrb") / (CALC_VALUE("Kh2s_asrb") + Sh2S)
+184 r_Sso4_asrb = Sso4 / (CALC_VALUE("Kso_asrb") + Sso4)
+
+# compute rate
+200 rates = CALC_VALUE("mu_asrb") * r_Sa_asrb * r_Ko_asrb * r_Snh_asrb * r_Kno_asrb * r_Sh2s_asrb * r_Sso4_asrb * Xasrb
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end	
+#
+    Lysis_Xasrb
+-start
+11 Xasrb = MOL("Xasrb") 
+200 rates = CALC_VALUE("b_asrb") * Xasrb 
+300 dLysis = rates * time
+310 dLysis = dLysis 
+400 SAVE dLysis
+-end
+#
+#========================================
+	Aerobic_Growth_Xsob
+-start
+# get molalities and convert to concentration in g/l
+20 So2 = MOL("Do") 
+40 Snh = MOL("Snh") 
+70 Sh2S = MOL("Sulphide") 
+95 Xsob = MOL("Xsob")
+
+# compute reaction term for specific component
+135 r_So2_sob = So2 /(CALC_VALUE("Ko_sob")+ So2)
+145 r_Snh_sob = Snh /(CALC_VALUE("Knh_sob")+ Snh)
+175 r_Sh2s_sob = Sh2s / (CALC_VALUE("Kh2s_sob") + Sh2S)
+
+# compute rate
+200 rates = CALC_VALUE("mu_sob") * r_So2_sob * r_Sh2s_sob * r_Snh_sob * Xsob
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth 
+400 SAVE dGrowth
+-end	
+#
+	Anoxic_Growth_Xsob
+-start
+# get molalities and convert to concentration in g/l
+20 So2 = MOL("Do") 
+40 Snh = MOL("Snh") 
+50 Sno = MOL("Sno") 
+70 Sh2S = MOL("Sulphide") 
+95 Xsob = MOL("Xsob")
+# compute reaction term for specific component
+135 r_Ko2_sob = CALC_VALUE("Ko_sob") /(CALC_VALUE("Ko_sob")+ So2)
+145 r_Snh_sob = Snh /(CALC_VALUE("Knh_sob")+ Snh)
+175 r_Sh2s_sob = Sh2s / (CALC_VALUE("Kh2s_sob") + Sh2S)
+185 r_Sno_sob = Sno / (CALC_VALUE("Kno_sob") + Sno)
+# compute rate
+200 rates = CALC_VALUE("mu_sob") * CALC_VALUE("eta_sob") * r_Ko2_sob * r_Sh2s_sob * r_Snh_sob * r_Sno_sob * Xsob
+# compute mass change per time step
+300 dGrowth= rates*time
+310 dGrowth = dGrowth
+400 SAVE dGrowth
+-end	
+#
+    Lysis_Xsob
+-start
+11 Xsob = MOL("Xsob") 
+200 rates = CALC_VALUE("b_sob") * Xsob 
+300 dLysis = rates * time
+310 dLysis = dLysis 
+400 SAVE dLysis
+-end
+
+
+#PRINT
+# -reset true
+# -selected_output true
+
+
+SELECTED_OUTPUT
+-file phout_sel.dat
+-high_precision
+#-reset false
+
+USER_PUNCH 
+-headings Do Sf Sa Si Snh Sno Sso4 Sh2s Xs Xi Xh Xa Xfb Xamb Xasrb Xsob
+10 PUNCH TOT("Do"), TOT("Sf"), TOT("Sa"), TOT("Sin"), TOT("Snh"), TOT("Sno"), TOT("Sulphide"), TOT("Sso"), TOT("Xs"), TOT("Xi"), TOT("Xh"), TOT("Xa"), TOT("Xfb"), TOT("Xamb"), TOT("Xasrb"), TOT("Xsob")
+#ende
+
+
+USER_GRAPH 1
+ -head time Do Snh Sno Sa Sf S Sso Xa Xh Xi Xs; 
+ -axis_titles "Time / days" "mol/L"
+ -chart_title "Bio"
+ -start
+   10 graph_x total_time/3600/24 
+   20 graph_y MOL("Do")
+   30 graph_y MOL("Snh")
+   40 graph_y MOL("Sno")
+   41 graph_y MOL("Sa")
+   42 graph_y MOL("Sf")
+   43 graph_y MOL("Sulphide")
+   44 graph_y MOL("Sso")
+   50 graph_y MOL("Xa")
+   60 graph_y MOL("Xh")
+   61 graph_y MOL("Xi")
+   62 graph_y MOL("Xs")
+ -end
+
+END
+
+
