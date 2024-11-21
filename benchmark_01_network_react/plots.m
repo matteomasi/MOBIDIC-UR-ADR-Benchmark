@@ -20,7 +20,7 @@ Nt_sub = 35;
 %% Load WASP data
 wasp = readtable('wasp8_output.xlsx');
 t_wasp = minutes(wasp.E1_t-wasp.E1_t(1));
-reach_wasp = {'E1','C1','E20'};
+reach_wasp = {'C1','E1','E20'};
 node_wasp = [2,4,6];
 
 %% Plot network
